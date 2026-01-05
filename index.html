@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome Onboard | Western Digital</title>
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- HERO HEADER -->
+  <header class="hero">
+    <div class="hero-content">
+      <div>
+        <h1>Welcome Onboard</h1>
+        <p>We’re excited to have you join Western Digital.</p>
+        <span id="liveTime"></span>
+      </div>
+
+      <img src="wd-logo.png" class="logo" alt="Western Digital Logo" />
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+
+      <!-- YOUTUBE (AUTOPLAY FIXED) -->
+      <div class="card wide">
+        <h2>Latest from Western Digital</h2>
+
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/wn-WiCm8Y3c?autoplay=1&mute=1&playsinline=1&rel=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- BLOG (LARGE) -->
+      <div class="card wide">
+        <h2>From the Western Digital Blog</h2>
+
+        <div class="blog-grid">
+          <a href="https://blog.westerndigital.com/" target="_blank" class="blog-item">
+            <div class="blog-thumb"></div>
+            <h3>Innovating the Future of Data</h3>
+            <p>How Western Digital is shaping AI, cloud, and storage infrastructure.</p>
+          </a>
+
+          <a href="https://blog.westerndigital.com/" target="_blank" class="blog-item">
+            <div class="blog-thumb"></div>
+            <h3>Engineering at Global Scale</h3>
+            <p>Behind the systems powering global data platforms.</p>
+          </a>
+
+          <a href="https://blog.westerndigital.com/" target="_blank" class="blog-item">
+            <div class="blog-thumb"></div>
+            <h3>Life at Western Digital</h3>
+            <p>Culture, people, and innovation inside the company.</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- LINKEDIN (FAST LINK, NO WIDGET) -->
+      <div class="card wide">
+        <h2>Professional Presence</h2>
+        <p>
+          Follow Western Digital on LinkedIn for company updates,
+          hiring, and industry insights.
+        </p>
+
+        <a
+          href="https://www.linkedin.com/company/western-digital"
+          target="_blank"
+          class="linkedin-button">
+          Visit Western Digital on LinkedIn →
+        </a>
+      </div>
+
+      <!-- INSTAGRAM (WORKING EMBED – RESTORED) -->
+      <div class="card small">
+        <h2>Instagram</h2>
+
+        <blockquote
+          class="instagram-media"
+          data-instgrm-permalink="https://www.instagram.com/wdindia_official/"
+          data-instgrm-version="14">
+        </blockquote>
+      </div>
+
+      <!-- STOCK (DISCREET) -->
+      <div class="card small">
+        <h2>Market Snapshot</h2>
+        <div class="stock-price">
+          WDC: <span id="stockPrice">Loading...</span>
+        </div>
+        <canvas id="stockChart"></canvas>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Instagram Embed Script (REQUIRED) -->
+  <script async src="https://www.instagram.com/embed.js"></script>
+
+  <!-- App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
