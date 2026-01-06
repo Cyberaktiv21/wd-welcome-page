@@ -1,115 +1,201 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welcome Onboard | Western Digital</title>
 
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-
-  <!-- HERO HEADER -->
-  <header class="hero">
+  <!-- =========================================================
+         HERO
+    ========================================================== -->
+  <header class="hero" role="banner">
     <div class="hero-content">
-      <div>
-        <h1>Welcome Onboard</h1>
-        <p>We’re excited to have you join Western Digital.</p>
-        <span id="liveTime"></span>
+      <div class="hero-copy">
+        <p class="hero-kicker">✅ Offer signed. Welcome to Western Digital.</p>
+
+        <h1>Welcome Onboard!</h1>
+
+        <p class="hero-subtitle">
+          Here’s to fast access, reliable backups, and a career with plenty of write cycles left.
+        </p>
+
+        <p class="hero-human">
+          Take a breath. We’re glad you’re here.
+        </p>
+
+        <div class="meta-line" aria-label="Company time">
+          <span id="liveTime">Company Time: —</span>
+        </div>
       </div>
 
-      <img src="wd-logo.png" class="logo" alt="Western Digital Logo" />
+      <img class="logo" src="wd-logo.png" alt="Western Digital Logo" loading="eager" />
     </div>
   </header>
 
-  <main class="container">
-    <section class="grid">
+  <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+  <main class="container" role="main">
+    <section class="grid" aria-label="Welcome content">
+      <!-- =====================================================
+             1) VALUES (FIRST)
+        ====================================================== -->
+      <article class="card wide values" aria-label="Company values">
+        <header class="section-header">
+          <h2>What matters here</h2>
+          <p class="section-subtitle">
+            The principles we use when nobody’s watching.
+          </p>
+        </header>
 
-      <!-- YOUTUBE (AUTOPLAY FIXED) -->
-      <div class="card wide">
-        <h2>Latest from Western Digital</h2>
+        <div class="values-grid">
+          <div class="value">
+            <div class="value-icon">
+              <img src="value-customers.png" alt="Customers" loading="lazy" />
+            </div>
+            <h3>Customers</h3>
+            <p>Enabling all customers to succeed</p>
+          </div>
 
-        <div class="video-container">
-          <iframe
-            src="https://www.youtube.com/embed/wn-WiCm8Y3c?autoplay=1&mute=1&playsinline=1&rel=0"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-          </iframe>
+          <div class="value">
+            <div class="value-icon">
+              <img src="value-results.png" alt="Results" loading="lazy" />
+            </div>
+            <h3>Results</h3>
+            <p>Making progress and achieving goals</p>
+          </div>
+
+          <div class="value">
+            <div class="value-icon">
+              <img src="value-connection.png" alt="Connection" loading="lazy" />
+            </div>
+            <h3>Connection</h3>
+            <p>Collaborating as one supportive team</p>
+          </div>
+
+          <div class="value">
+            <div class="value-icon">
+              <img src="value-excellence.png" alt="Excellence" loading="lazy" />
+            </div>
+            <h3>Excellence</h3>
+            <p>Doing our best and doing what’s right</p>
+          </div>
+
+          <div class="value">
+            <div class="value-icon">
+              <img src="value-innovation.png" alt="Innovation" loading="lazy" />
+            </div>
+            <h3>Innovation</h3>
+            <p>Inventing in big and small ways</p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <!-- BLOG (LARGE) -->
-      <div class="card wide">
-        <h2>From the Western Digital Blog</h2>
+      <!-- =====================================================
+             2) SOCIAL MEDIA
+        ====================================================== -->
+      <article class="card wide" aria-label="Social media">
+        <header class="section-header">
+          <h2>See us in the wild</h2>
+          <p class="section-subtitle">
+            A glimpse into what we’re building and celebrating.
+          </p>
+        </header>
 
-        <div class="blog-grid">
-          <a href="https://blog.westerndigital.com/" target="_blank" class="blog-item">
-            <div class="blog-thumb"></div>
-            <h3>Innovating the Future of Data</h3>
-            <p>How Western Digital is shaping AI, cloud, and storage infrastructure.</p>
-          </a>
+        <div class="social-split">
+          <!-- YouTube -->
+          <div class="social-pane" aria-label="YouTube">
+            <div class="video-container">
+              <iframe title="Western Digital video"
+                src="https://www.youtube.com/embed/wn-WiCm8Y3c?autoplay=1&mute=1&playsinline=1&rel=0" frameborder="0"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+          </div>
 
-          <a href="https://blog.westerndigital.com/" target="_blank" class="blog-item">
-            <div class="blog-thumb"></div>
-            <h3>Engineering at Global Scale</h3>
-            <p>Behind the systems powering global data platforms.</p>
-          </a>
-
-          <a href="https://blog.westerndigital.com/" target="_blank" class="blog-item">
-            <div class="blog-thumb"></div>
-            <h3>Life at Western Digital</h3>
-            <p>Culture, people, and innovation inside the company.</p>
-          </a>
+          <!-- Instagram -->
+          <div class="social-pane instagram-pane" aria-label="Instagram">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/wdindia_official/"
+              data-instgrm-version="14"></blockquote>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <!-- LINKEDIN (FAST LINK, NO WIDGET) -->
-      <div class="card wide">
-        <h2>Professional Presence</h2>
-        <p>
-          Follow Western Digital on LinkedIn for company updates,
-          hiring, and industry insights.
-        </p>
+      <!-- =====================================================
+             3) LINKEDIN
+        ====================================================== -->
+      <article class="card wide" aria-label="LinkedIn">
+        <div class="card-title-row">
+          <div>
+            <h2>Where we work out loud</h2>
+            <p class="section-subtitle">
+              Updates, openings, and the stories we share publicly.
+            </p>
+          </div>
 
-        <a
-          href="https://www.linkedin.com/company/western-digital"
-          target="_blank"
-          class="linkedin-button">
+          <img class="brand-icon" src="linkedin-logo.png" alt="LinkedIn" loading="lazy" />
+        </div>
+
+        <a class="linkedin-button" href="https://www.linkedin.com/company/western-digital" target="_blank"
+          rel="noopener noreferrer">
+          <img class="btn-icon" src="linkedin-logo.png" alt="" />
           Visit Western Digital on LinkedIn →
         </a>
-      </div>
+      </article>
 
-      <!-- INSTAGRAM (WORKING EMBED – RESTORED) -->
-      <div class="card small">
-        <h2>Instagram</h2>
+      <!-- =====================================================
+             4) COMPANY BLOG
+        ====================================================== -->
+      <article class="card wide" aria-label="Company blog">
+        <header class="section-header">
+          <h2>What we’re building</h2>
+          <p class="section-subtitle">
+            A few recent stories from teams across the company.
+          </p>
+        </header>
 
-        <blockquote
-          class="instagram-media"
-          data-instgrm-permalink="https://www.instagram.com/wdindia_official/"
-          data-instgrm-version="14">
-        </blockquote>
-      </div>
+        <div class="slider" aria-label="Blog post carousel">
+          <button class="slider-btn prev" type="button" aria-label="Previous post">
+            ‹
+          </button>
 
-      <!-- STOCK (DISCREET) -->
-      <div class="card small">
-        <h2>Market Snapshot</h2>
-        <div class="stock-price">
-          WDC: <span id="stockPrice">Loading...</span>
+          <div class="slider-track">
+            <a class="blog-item" href="https://blog.westerndigital.com/" target="_blank" rel="noopener noreferrer">
+              <img class="blog-thumb-img" src="blog-1.jpg" alt="Innovating the Future of Data" loading="lazy" />
+              <h3>Innovating the Future of Data</h3>
+              <p>How Western Digital is shaping AI, cloud, and storage.</p>
+            </a>
+
+            <a class="blog-item" href="https://blog.westerndigital.com/" target="_blank" rel="noopener noreferrer">
+              <img class="blog-thumb-img" src="blog-2.jpg" alt="Engineering at Global Scale" loading="lazy" />
+              <h3>Engineering at Global Scale</h3>
+              <p>Behind systems powering global platforms.</p>
+            </a>
+
+            <a class="blog-item" href="https://blog.westerndigital.com/" target="_blank" rel="noopener noreferrer">
+              <img class="blog-thumb-img" src="blog-3.jpg" alt="Life at Western Digital" loading="lazy" />
+              <h3>Life at Western Digital</h3>
+              <p>Culture, people, and innovation inside the company.</p>
+            </a>
+          </div>
+
+          <button class="slider-btn next" type="button" aria-label="Next post">
+            ›
+          </button>
         </div>
-        <canvas id="stockChart"></canvas>
-      </div>
-
+      </article>
     </section>
   </main>
 
-  <!-- Instagram Embed Script (REQUIRED) -->
+  <!-- Third-party embed -->
   <script async src="https://www.instagram.com/embed.js"></script>
 
-  <!-- App Logic -->
+  <!-- App logic -->
   <script src="app.js"></script>
 </body>
+
 </html>

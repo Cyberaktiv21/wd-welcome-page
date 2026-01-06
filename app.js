@@ -1,3 +1,4 @@
+// LIVE TIME
 function updateTime() {
   document.getElementById("liveTime").innerText =
     "Company Time: " + new Date().toLocaleString();
@@ -5,34 +6,74 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-const stockEl = document.getElementById("stockPrice");
+/* ============================
+   INFINITE BLOG SLIDER (3 POSTS)
+   ============================ */
 
-fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=WDC")
-  .then(res => res.json())
-  .then(data => {
-    const price = data.quoteResponse.result[0].regularMarketPrice;
-    stockEl.innerText = "$" + price.toFixed(2);
-    drawChart([price - 1, price - 0.5, price, price + 0.4, price + 0.8]);
-  })
-  .catch(() => {
-    const demo = [55.3, 55.8, 56.1, 56.0, 56.5];
-    stockEl.innerText = "$" + demo[4].toFixed(2);
-    drawChart(demo);
-  });
+const track = document.querySelector(".slider-track");
+const slides = Array.from(document.querySelectorAll(".blog-item"));
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
 
-function drawChart(prices) {
-  new Chart(document.getElementById("stockChart"), {
-    type: "line",
-    data: {
-      labels: ["10AM", "11AM", "12PM", "1PM", "2PM"],
-      datasets: [{
-        data: prices,
-        borderColor: "#1E90FF",
-        tension: 0.4
-      }]
-    },
-    options: {
-      plugins: { legend: { display: false } }
-    }
-  });
+let index = 1;
+let slideWidth;
+
+// Clone first & last slides
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
+
+firstClone.classList.add("clone");
+lastClone.classList.add("clone");
+
+track.appendChild(firstClone);
+track.insertBefore(lastClone, slides[0]);
+
+const allSlides = Array.from(track.children);
+
+function setSlideWidth() {
+  slideWidth = allSlides[0].getBoundingClientRect().width + 20; // 20 = margin
+  track.style.transform = `translateX(-${slideWidth * index}px)`;
 }
+
+window.addEventListener("resize", setSlideWidth);
+setSlideWidth();
+
+// Move slider
+function moveToIndex() {
+  track.style.transition = "transform 0.45s ease";
+  track.style.transform = `translateX(-${slideWidth * index}px)`;
+}
+
+// Next / Prev buttons
+nextBtn.onclick = () => {
+  if (index >= allSlides.length - 1) return;
+  index++;
+  moveToIndex();
+};
+
+prevBtn.onclick = () => {
+  if (index <= 0) return;
+  index--;
+  moveToIndex();
+};
+
+// Seamless loop reset
+track.addEventListener("transitionend", () => {
+  if (allSlides[index].classList.contains("clone")) {
+    track.style.transition = "none";
+
+    if (index === allSlides.length - 1) {
+      index = 1;
+    } else if (index === 0) {
+      index = allSlides.length - 2;
+    }
+
+    track.style.transform = `translateX(-${slideWidth * index}px)`;
+  }
+});
+
+// Auto-rotate forever
+setInterval(() => {
+  index++;
+  moveToIndex();
+}, 6000);
