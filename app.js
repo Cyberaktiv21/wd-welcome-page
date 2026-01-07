@@ -77,3 +77,35 @@ setInterval(() => {
   index++;
   moveToIndex();
 }, 6000);
+
+/* ============================
+   CHAT BUTTON HANDLER
+   ============================ */
+
+const chatButton = document.getElementById("chatButton");
+const popupOverlay = document.getElementById("popupOverlay");
+const popupClose = document.getElementById("popupClose");
+
+// Show popup when chat button is clicked
+chatButton.addEventListener("click", () => {
+  popupOverlay.classList.add("active");
+});
+
+// Close popup when close button is clicked
+popupClose.addEventListener("click", () => {
+  popupOverlay.classList.remove("active");
+});
+
+// Close popup when clicking outside the popup content
+popupOverlay.addEventListener("click", (e) => {
+  if (e.target === popupOverlay) {
+    popupOverlay.classList.remove("active");
+  }
+});
+
+// Close popup with Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && popupOverlay.classList.contains("active")) {
+    popupOverlay.classList.remove("active");
+  }
+});
