@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Workflow Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --bg-deep: #05050A;       
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #05050A 60%);
+            --card-bg: rgba(20, 25, 40, 0.7); 
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: #6366f1;
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+            --primary: #6366f1;
+            --glow: rgba(99, 102, 241, 0.25);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: var(--bg-gradient);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- UPDATED Background Logo Styling --- */
+        .background-logo {
+            position: fixed;
+            top: 5%;   
+            right: 5%;
+            z-index: -1; 
+            opacity: 0.4; 
+            pointer-events: none;
+        }
+
+        .background-logo img {
+            /* Changed from 450px to 360px (20% smaller) */
+            width: 360px; 
+            height: auto;
+            display: block;
+            /* Removed transform: rotate(-10deg); */
+        }
+        /* -------------------------------------- */
+
+
+        .app-container { width: 100%; max-width: 1100px; z-index: 1; }
+        .dashboard-header { text-align: center; margin-bottom: 4rem; }
+        .gradient-title {
+            font-size: 3.5rem; font-weight: 800; letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle { font-size: 1.1rem; color: var(--text-gray); }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card { text-decoration: none; display: block; }
+        .card-inner {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 16px; padding: 2rem; display: flex; align-items: center;
+            gap: 1.5rem; transition: all 0.3s ease; backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2); height: 100%; 
+        }
+        .card:hover .card-inner {
+            transform: translateY(-5px); border-color: var(--card-hover-border);
+            box-shadow: 0 0 30px var(--glow); background: rgba(30, 35, 55, 0.9);
+        }
+        .icon-box {
+            width: 50px; height: 50px; background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-white); transition: all 0.3s ease; flex-shrink: 0; 
+        }
+        .card:hover .icon-box { background: var(--primary); color: white; transform: rotate(-10deg) scale(1.1); }
+        .card-text { flex-grow: 1; }
+        .card-text h2 { font-size: 1.2rem; font-weight: 600; color: var(--text-white); margin: 0; }
+        .arrow-icon {
+            color: var(--text-gray); opacity: 0; transform: translateX(-10px); transition: all 0.3s ease;
+        }
+        .card:hover .arrow-icon { opacity: 1; transform: translateX(0); color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div class="background-logo">
+        <img src="/dashboard/Western_Digital.svg.png" alt="WDC Background Logo">
+    </div>
+
+    <div class="app-container">
+        
+        <header class="dashboard-header">
+            <h1 class="gradient-title">HR Workflow Hub</h1>
+            <p class="subtitle">Select a tool to begin automation</p>
+        </header>
+
+        <main class="dashboard-grid">
+            
+            <a href="http://localhost:8080" class="card">
+                <div class="card-inner">
+                    <div class="icon-box"><i data-lucide="mail"></i></div>
+                    <div class="card-text"><h2>Email Console</h2></div>
+                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
+                </div>
+            </a>
+
+            <a href="http://localhost:3000" class="card">
+                <div class="card-inner">
+                    <div class="icon-box"><i data-lucide="calendar-clock"></i></div>
+                    <div class="card-text"><h2>Task Scheduler</h2></div>
+                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
+                </div>
+            </a>
+
+            <a href="http://localhost:5001" class="card">
+                <div class="card-inner">
+                    <div class="icon-box"><i data-lucide="file-search"></i></div>
+                    <div class="card-text"><h2>PDF Data Extractor</h2></div>
+                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
+                </div>
+            </a>
+
+            <a href="http://localhost:5050" class="card">
+                <div class="card-inner">
+                    <div class="icon-box"><i data-lucide="message-circle-question"></i></div>
+                    <div class="card-text"><h2>FAQ Chatbot</h2></div>
+                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
+                </div>
+            </a>
+
+            <a href="/social-media" class="card">
+                <div class="card-inner">
+                    <div class="icon-box"><i data-lucide="share-2"></i></div>
+                    <div class="card-text"><h2>Social Media Linking Page</h2></div>
+                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
+                </div>
+            </a>
+
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

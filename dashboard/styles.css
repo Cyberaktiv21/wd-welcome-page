@@ -1,0 +1,232 @@
+:root {
+    /* Color Palette */
+    --bg-main: #020617;       /* Very Dark Slate */
+    --card-surface: #0f172a;  /* Dark Slate */
+    --card-hover: #1e293b;    /* Lighter Slate */
+    --border-color: #334155;
+    
+    --primary-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%); /* Cyan to Blue */
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --accent-glow: rgba(56, 189, 248, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+/* --- Background Ambient Glows --- */
+.glow-bg {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.2;
+}
+
+.glow-1 {
+    top: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: #4f46e5; /* Indigo */
+}
+
+.glow-2 {
+    bottom: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: #06b6d4; /* Cyan */
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1100px;
+    z-index: 1;
+}
+
+/* --- Header --- */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.header-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+}
+
+.gradient-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    background: linear-gradient(to right, #ffffff 20%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+}
+
+/* --- Grid Layout --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* --- Card Styles --- */
+.card {
+    text-decoration: none;
+    display: block;
+    /* Entrance Animation */
+    opacity: 0;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay);
+}
+
+.card-glass {
+    /* Using solid colors with slight transparency for better visibility */
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card Hover State */
+.card:hover .card-glass {
+    transform: translateY(-5px);
+    border-color: #38bdf8; /* Bright Blue Border on Hover */
+    background-color: var(--card-hover);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5),
+                0 0 20px -5px rgba(56, 189, 248, 0.15); /* Subtle glow */
+}
+
+/* --- Icons --- */
+.icon-box {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.card:hover .icon-box {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.icon-box i {
+    width: 26px;
+    height: 26px;
+}
+
+/* --- Text Content --- */
+.card-text {
+    flex: 1;
+}
+
+.card h2 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.card:hover p {
+    color: #cbd5e1; /* Lighter grey on hover */
+}
+
+/* --- Arrow Icon --- */
+.arrow-icon {
+    color: var(--text-secondary);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.card:hover .arrow-icon {
+    color: #38bdf8;
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+/* --- Keyframe Animations --- */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .gradient-title {
+        font-size: 2.25rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}

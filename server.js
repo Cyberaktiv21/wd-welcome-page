@@ -1,23 +1,19 @@
-// WD Welcome Page Express Server
 const express = require('express');
 const path = require('path');
 const app = express();
 
-// Set static folder for all assets (HTML, CSS, images, JS)
 app.use(express.static(path.join(__dirname, '.')));
 
-// Serve index.html for root (optional, but friendly!)
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'dashboard', 'index.html'));
 });
 
-// The port can be adjusted via env, default 3000
+app.get('/social-media', (req, res) => {
+  res.sendFile(path.join(__dirname, 'social-media', 'index.html'));
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`WD Welcome Page server running at http://localhost:${PORT}`);
+  console.log(`Server running on port:${PORT}`);
 });
-
-// Usage:
-//   npm install
-//   npm start
-// Or: node server.js
