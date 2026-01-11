@@ -12,10 +12,6 @@ app.get('/social-media', (req, res) => {
   res.sendFile(path.join(__dirname, 'social-media', 'index.html'));
 });
 
-app.get('/faq', (req, res) => {
-  res.sendFile(path.join(__dirname, 'temp', 'index.html'));
-});
-
 const PORT = process.env.PORT || 1000;
 app.listen(PORT, () => {
   console.log(`Server running on port:${PORT}`);
