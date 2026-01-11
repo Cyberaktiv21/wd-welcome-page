@@ -96,12 +96,65 @@ app.get('/api/leadership', async (req, res) => {
         }
 
         // Bio is usually a longer paragraph nearby
-        // We'll look for the first paragraph with substantial text
         let container = nameEl.closest('div.textcolumn, div.cmp-text');
         if (container.length) {
-          bio = container.text().trim();
-          // Clean up bio: remove name and title if they are at the start
-          bio = bio.replace(name, '').replace(title, '').trim();
+          const candidates = [];
+
+          // Check paragraphs and divs for bio text
+          container.find('p, div').each((i, el) => {
+            const text = $(el).text().trim();
+            // Filter out short texts, titles, and the name itself
+            if (text.length > 60 && text !== name && text !== title) {
+              candidates.push(text);
+            }
+          });
+
+          // Strategy 1: Find candidate starting with the Name (Best case)
+          const nameStartRegex = new RegExp(`^${name}`, 'i');
+          let bestBio = candidates.find(text => nameStartRegex.test(text));
+
+          // Strategy 2: If no name match, take the longest candidate
+          if (!bestBio && candidates.length > 0) {
+            bestBio = candidates.sort((a, b) => b.length - a.length)[0];
+          }
+
+          if (bestBio) {
+            bio = bestBio;
+          } else {
+            // Fallback: get full text but be careful
+            bio = container.text().trim();
+          }
+
+          // CLEANUP:
+          // 1. If the bio starts with the Title, it might be the "metadata sentence" issue.
+          //    "Chief of Global Operations... is the Chief..."
+          //    We check if it starts with Title and replace it with Name, or prepend Name.
+          if (title && bio.toLowerCase().startsWith(title.toLowerCase())) {
+            // Check if it follows the pattern "Title ... is the"
+            if (bio.match(new RegExp(`^${title}.*\\s+is\\s+the`, 'i'))) {
+              // Replace the starting Title (and Company if present) with the Name
+              // Heuristic: Replace everything up to "is the" with "Name"
+              bio = bio.replace(new RegExp(`^${title}.*?(?=\\s+is\\s+the)`, 'i'), name);
+            } else {
+              // Just prepend the name if it's missing
+              bio = `${name}, ${bio}`;
+            }
+          }
+
+          // 2. Ensure it starts with the Name (if it doesn't already)
+          if (!bio.toLowerCase().startsWith(name.toLowerCase())) {
+            // If it starts with "is", prepend Name
+            if (bio.toLowerCase().startsWith('is ')) {
+              bio = `${name} ${bio}`;
+            } else {
+              // Otherwise, just prepend Name + is? Or just Name?
+              // Let's try to be safe. If it's a full sentence not starting with Name, 
+              // maybe we shouldn't force it unless we are sure.
+              // But the user specifically wants "Vidya Gubbi is..."
+              // So let's prepend Name + " is " if the text seems to describe them.
+              bio = `${name} ${bio.charAt(0).toLowerCase() + bio.slice(1)}`;
+            }
+          }
         }
 
         // Image: look for an image with the name in the src
