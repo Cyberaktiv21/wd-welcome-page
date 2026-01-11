@@ -7,6 +7,31 @@ setInterval(updateTime, 1000);
 updateTime();
 
 /* ============================
+   FALLBACK DATA (For Static Hosting)
+   ============================ */
+const FALLBACK_BLOGS = [
+  { "title": "Western Digital and the Foundation of the AI Data Economy", "link": "https://blog.westerndigital.com/western-digital-and-the-foundation-of-the-ai-data-economy/", "image": "https://blog.westerndigital.com/wp-content/uploads/2025/11/ReinventingStorageBlog-BlogHero-1440x758-Final.png", "description": "November 20, 2025 • 9 min read" },
+  { "title": "The Long-Term Case for HDD Storage", "link": "https://blog.westerndigital.com/long-term-case-for-hdd-storage/", "image": "https://blog.westerndigital.com/wp-content/uploads/2025/10/IIC-BlogHero-1440x758-1.png", "description": "October 20, 2025 • 4 min read" },
+  { "title": "The Central Role of HDDs in AI Storage", "link": "https://blog.westerndigital.com/the-central-role-of-hdds-in-ai-storage/", "image": "https://blog.westerndigital.com/wp-content/uploads/2025/09/BlogHero-DataCenter-1440x758-1.jpg", "description": "September 24, 2025 • 4 min read" },
+  { "title": "Giving HDD Rare Earth Elements New Life", "link": "https://blog.westerndigital.com/giving-hdd-rare-earth-elements-new-life/", "image": "https://blog.westerndigital.com/wp-content/uploads/2025/04/NewsroomTile-Rare-Earth-Recycling-Program.jpg", "description": "April 17, 2025 • 7 min read" },
+  { "title": "Powering the Future of Cloud Storage", "link": "https://blog.westerndigital.com/hdd-energy-efficiency-cloud-storage/", "image": "https://blog.westerndigital.com/wp-content/uploads/2025/12/PFCS-BlogHero-1440x758-1.jpg", "description": "December 10, 2025 • 8 min read" },
+  { "title": "The Smart Path to Scalable Storage", "link": "https://blog.westerndigital.com/smr-hdd-technology-ai-data-centers/", "image": "https://blog.westerndigital.com/wp-content/uploads/2025/12/SPSS-BlogHero-1440x758-Final.png", "description": "December 4, 2025 • 6 min read" }
+];
+
+const FALLBACK_LEADERSHIP = [
+  { "name": "Irving Tan", "title": "Chief Executive Officer", "bio": "Irving Tan serves as the Chief Executive Officer, leading Western Digital's global strategy and operations.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/irving-tan-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Kris Sennesael", "title": "Chief Financial Officer", "bio": "Kris Sennesael currently serves as the Chief Financial Officer of Western Digital. He is responsible for the global finance organization, including accounting, financial planning and analysis, tax, treasury, internal audit, investor relations, and corporate real estate.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/kris-sennesael-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Ahmed Shihab", "title": "Chief Product Officer", "bio": "Ahmed Shihab is the Chief Product Officer at Western Digital. In this role, he is responsible for leading engineering and product strategy as well as innovation and the development of current and future Western Digital products and solutions.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/ahmed-shihab-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Scott Davis", "title": "SVP, Global Channel & ROEM Sales", "bio": "Scott Davis as a veteran sales executive with over 37 years at the company, Scott has unmatched experience in fostering deep, lasting customer relationships and cultivating high-performing teams. He has held various executive leadership roles within the company.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/scott-davis-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Cynthia Tregillis", "title": "Chief Legal Officer", "bio": "Cynthia Tregillis is the Chief Legal Officer and Secretary at Western Digital. She oversees the company's worldwide legal, risk management, compliance, and government relations functions.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/cynthia-tregillis-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Vidya Gubbi", "title": "Chief of Global Operations", "bio": "Vidya Gubbi is the Chief of Global Operations at Western Digital. He is responsible for all global operations functions, including manufacturing operations, procurement, supply chain, quality and sustainability.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/vidya-gubbi-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Katie Watson", "title": "Chief Human Resources Officer", "bio": "Katie Watson is the Chief Human Resources Officer at Western Digital. She oversees the company’s global human resources functions.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/katie-watson-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Sesh Tirumala", "title": "Chief Information Officer", "bio": "Sesh Tirumala is the Chief Information Officer at Western Digital, driving the company's digital transformation and fostering a culture of innovation through technology. In this role, he oversees all of Information technology, Cybersecurity, and Enterprise data and analytics.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/sesh-tirumala-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Jeremy Faulk", "title": "VP, Strategy & Corp Dev", "bio": "Jeremy Faulk is the Vice President of Strategy and Corporate Development at Western Digital. In this role, he is responsible for long-range planning, business and segment strategy, innovation investments, and navigating the tectonic shifts created by AI.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/jeremy-faulk-western-digital.png.thumb.1280.1280.png" },
+  { "name": "Ginita Taylor", "title": "Chief of Staff to CEO", "bio": "Ginita Taylor is the Chief of Staff to the CEO at Western Digital. She is responsible for planning and executing all aspects of the CEO office, as well as leading Strategic and Employee Communications.", "image": "https://www.westerndigital.com/content/dam/store/en-us/assets/company/ginita-taylor-western-digital.png.thumb.1280.1280.png" }
+];
+
+/* ============================
    BLOG FETCHING & SLIDER
    ============================ */
 
@@ -19,14 +44,19 @@ let interval;
 async function fetchBlogs() {
   try {
     const response = await fetch('/api/blogs');
+    if (!response.ok) throw new Error('API not available');
     const blogs = await response.json();
 
     if (blogs.length > 0) {
       renderBlogs(blogs);
       initSlider();
+    } else {
+      throw new Error('No blogs found');
     }
   } catch (error) {
-    console.error('Failed to load blogs', error);
+    console.log('Using fallback blog data');
+    renderBlogs(FALLBACK_BLOGS);
+    initSlider();
   }
 }
 
@@ -180,11 +210,12 @@ const bioContent = document.getElementById('bioContent');
 async function fetchLeadership() {
   try {
     const response = await fetch('/api/leadership');
+    if (!response.ok) throw new Error('API not available');
     const leaders = await response.json();
     renderLeadership(leaders);
   } catch (error) {
-    console.error('Failed to load leadership', error);
-    leadershipGrid.innerHTML = '<p style="text-align:center; color: #ff6b6b;">Failed to load leadership team.</p>';
+    console.log('Using fallback leadership data');
+    renderLeadership(FALLBACK_LEADERSHIP);
   }
 }
 
