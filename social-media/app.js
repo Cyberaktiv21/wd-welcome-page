@@ -243,3 +243,57 @@ leadershipModal.addEventListener('click', (e) => {
 
 // Init
 fetchLeadership();
+
+/* ============================
+   ROADMAP INTERACTION
+   ============================ */
+function initRoadmap() {
+  const capacityBoxes = document.querySelectorAll('.rm-capacity-box');
+  const infoCards = document.querySelectorAll('.rm-info-card');
+  const detailPanels = document.querySelectorAll('.rm-detail-panel');
+
+  function showDetail(id) {
+    detailPanels.forEach(panel => {
+      panel.classList.remove('active');
+    });
+
+    const targetPanel = document.getElementById('detail-' + id);
+    if (targetPanel) {
+      targetPanel.classList.add('active');
+      targetPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  capacityBoxes.forEach(box => {
+    box.addEventListener('click', () => {
+      capacityBoxes.forEach(b => b.classList.remove('active'));
+      box.classList.add('active');
+
+      const tech = box.getAttribute('data-tech');
+      showDetail(tech);
+    });
+  });
+
+  infoCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const detail = card.getAttribute('data-detail');
+      showDetail(detail);
+    });
+  });
+
+  // Timeline interaction
+  const timelinePoints = document.querySelectorAll('.rm-timeline-point');
+  timelinePoints.forEach(point => {
+    point.addEventListener('click', () => {
+      // Could scroll to relevant section or just highlight
+      // For now, just a visual feedback
+      timelinePoints.forEach(p => p.querySelector('.rm-point-dot').style.background = '#7b5fc9');
+      point.querySelector('.rm-point-dot').style.background = '#5ec4d4';
+    });
+  });
+}
+
+// Call initRoadmap when DOM is ready or after content injection
+document.addEventListener('DOMContentLoaded', initRoadmap);
+// Also call it immediately in case we are injecting script late
+initRoadmap();
