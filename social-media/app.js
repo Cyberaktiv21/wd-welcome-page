@@ -7,76 +7,131 @@ setInterval(updateTime, 1000);
 updateTime();
 
 /* ============================
-   INFINITE BLOG SLIDER (3 POSTS)
+   BLOG FETCHING & SLIDER
    ============================ */
 
 const track = document.querySelector(".slider-track");
-const slides = Array.from(document.querySelectorAll(".blog-item"));
-const prevBtn = document.querySelector(".prev");
-const nextBtn = document.querySelector(".next");
-
+let slides = [];
 let index = 1;
 let slideWidth;
+let interval;
 
-// Clone first & last slides
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[slides.length - 1].cloneNode(true);
+async function fetchBlogs() {
+  try {
+    const response = await fetch('/api/blogs');
+    const blogs = await response.json();
 
-firstClone.classList.add("clone");
-lastClone.classList.add("clone");
-
-track.appendChild(firstClone);
-track.insertBefore(lastClone, slides[0]);
-
-const allSlides = Array.from(track.children);
-
-function setSlideWidth() {
-  slideWidth = allSlides[0].getBoundingClientRect().width + 20; // 20 = margin
-  track.style.transform = `translateX(-${slideWidth * index}px)`;
-}
-
-window.addEventListener("resize", setSlideWidth);
-setSlideWidth();
-
-// Move slider
-function moveToIndex() {
-  track.style.transition = "transform 0.45s ease";
-  track.style.transform = `translateX(-${slideWidth * index}px)`;
-}
-
-// Next / Prev buttons
-nextBtn.onclick = () => {
-  if (index >= allSlides.length - 1) return;
-  index++;
-  moveToIndex();
-};
-
-prevBtn.onclick = () => {
-  if (index <= 0) return;
-  index--;
-  moveToIndex();
-};
-
-// Seamless loop reset
-track.addEventListener("transitionend", () => {
-  if (allSlides[index].classList.contains("clone")) {
-    track.style.transition = "none";
-
-    if (index === allSlides.length - 1) {
-      index = 1;
-    } else if (index === 0) {
-      index = allSlides.length - 2;
+    if (blogs.length > 0) {
+      renderBlogs(blogs);
+      initSlider();
     }
+  } catch (error) {
+    console.error('Failed to load blogs', error);
+  }
+}
 
+function renderBlogs(blogs) {
+  track.innerHTML = ''; // Clear existing static blogs
+
+  blogs.forEach(blog => {
+    const a = document.createElement('a');
+    a.className = 'blog-item';
+    a.href = blog.link;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+
+    a.innerHTML = `
+      <img class="blog-thumb-img" src="${blog.image}" alt="${blog.title}" loading="lazy" />
+      <h3>${blog.title}</h3>
+      <p>${blog.description}</p>
+    `;
+
+    track.appendChild(a);
+  });
+}
+
+function initSlider() {
+  slides = Array.from(document.querySelectorAll(".blog-item"));
+  if (slides.length === 0) return;
+
+  // Clone first & last slides
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+
+  firstClone.classList.add("clone");
+  lastClone.classList.add("clone");
+
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, slides[0]);
+
+  const allSlides = Array.from(track.children);
+
+  function setSlideWidth() {
+    // Check if element is visible/has width
+    const rect = allSlides[0].getBoundingClientRect();
+    if (rect.width === 0) return; // Prevent errors if hidden
+
+    slideWidth = rect.width + 20; // 20 = margin
     track.style.transform = `translateX(-${slideWidth * index}px)`;
   }
-});
 
-// Auto-rotate forever
-setInterval(() => {
-  index++;
-  moveToIndex();
-}, 6000);
+  window.addEventListener("resize", setSlideWidth);
+  // Initial set with a small delay to ensure rendering
+  setTimeout(setSlideWidth, 100);
+
+  // Move slider
+  function moveToIndex() {
+    track.style.transition = "transform 0.45s ease";
+    track.style.transform = `translateX(-${slideWidth * index}px)`;
+  }
+
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+
+  // Next / Prev buttons
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      if (index >= allSlides.length - 1) return;
+      index++;
+      moveToIndex();
+    };
+  }
+
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      if (index <= 0) return;
+      index--;
+      moveToIndex();
+    };
+  }
+
+  // Seamless loop reset
+  track.addEventListener("transitionend", () => {
+    // Ensure index is within bounds of allSlides
+    if (!allSlides[index]) return;
+
+    if (allSlides[index].classList.contains("clone")) {
+      track.style.transition = "none";
+
+      if (index === allSlides.length - 1) {
+        index = 1;
+      } else if (index === 0) {
+        index = allSlides.length - 2;
+      }
+
+      track.style.transform = `translateX(-${slideWidth * index}px)`;
+    }
+  });
+
+  // Auto-rotate forever
+  interval = setInterval(() => {
+    index++;
+    moveToIndex();
+  }, 6000);
+}
+
+// Start
+fetchBlogs();
 
 /* ============================
    CHAT BUTTON HANDLER
