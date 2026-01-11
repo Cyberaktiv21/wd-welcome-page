@@ -1,157 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Workflow Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Workflow Automation Platform</title>
 
-    <style>
-        /* --- CSS STYLES --- */
-        :root {
-            --bg-deep: #05050A;       
-            --bg-gradient: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #05050A 60%);
-            --card-bg: rgba(20, 25, 40, 0.7); 
-            --card-border: rgba(255, 255, 255, 0.08);
-            --card-hover-border: #6366f1;
-            --text-white: #ffffff;
-            --text-gray: #94a3b8;
-            --primary: #6366f1;
-            --glow: rgba(99, 102, 241, 0.25);
-        }
+  <style>
+    :root{
+      --bg0:#050714;
+      --bg1:#070b1f;
+      --text:#e8ecff;
+      --muted:#aab3d6;
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+      --wd-blue:#1f6bff;
+      --wd-blue-2:#33b6ff;
+      --purple:#8a5bff;
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-deep);
-            background-image: var(--bg-gradient);
-            color: var(--text-white);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            position: relative;
-            overflow-x: hidden;
-        }
+      --border: rgba(255,255,255,.10);
+      --shadow: 0 18px 45px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
 
-        /* --- UPDATED Background Logo Styling --- */
-        .background-logo {
-            position: fixed;
-            top: 5%;   
-            right: 5%;
-            z-index: -1; 
-            opacity: 0.4; 
-            pointer-events: none;
-        }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 18% 8%, rgba(31,107,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 78% 18%, rgba(51,182,255,.16), transparent 55%),
+        radial-gradient(900px 700px at 65% 86%, rgba(138,91,255,.14), transparent 60%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+    }
 
-        .background-logo img {
-            /* Changed from 450px to 360px (20% smaller) */
-            width: 360px; 
-            height: auto;
-            display: block;
-            /* Removed transform: rotate(-10deg); */
-        }
-        /* -------------------------------------- */
+    .wrap{
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px 50px;
+    }
+
+    /* Top bar */
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 20px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(10,14,35,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      background: linear-gradient(135deg, var(--wd-blue), var(--wd-blue-2));
+      box-shadow: 0 12px 28px rgba(31,107,255,.35);
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .brand p{
+      margin:2px 0 0;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top:30px;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:26px;
+      background: rgba(10,14,35,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:
+        radial-gradient(400px 260px at 20% 20%, rgba(31,107,255,.25), transparent 60%),
+        radial-gradient(300px 220px at 85% 30%, rgba(51,182,255,.18), transparent 65%),
+        radial-gradient(380px 260px at 60% 90%, rgba(138,91,255,.16), transparent 62%);
+    }
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      position:relative;
+    }
+
+    .headline{
+      margin:10px 0 0;
+      font-size:36px;
+      line-height:1.15;
+      position:relative;
+    }
+
+    .headline span{
+      background: linear-gradient(90deg, var(--wd-blue-2), var(--wd-blue), var(--purple));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .sub{
+      margin-top:12px;
+      max-width:85ch;
+      font-size:14px;
+      line-height:1.7;
+      color:rgba(232,236,255,.8);
+      position:relative;
+    }
+
+    .stats{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .pill{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      font-size:12px;
+    }
+
+    /* Grid */
+    .grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:14px;
+    }
+
+    .tile{
+      grid-column:span 4;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background: rgba(10,14,35,.45);
+      padding:16px;
+      text-decoration:none;
+      color:var(--text);
+      box-shadow: 0 14px 35px rgba(0,0,0,.45);
+      transition:.2s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .tile:hover{
+      transform:translateY(-2px);
+      border-color:rgba(51,182,255,.35);
+    }
+
+    .tileHead{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    /* ICON FIX */
+    .icon{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, var(--wd-blue), var(--wd-blue-2));
+      display:grid;
+      place-items:center;
+      box-shadow: 0 12px 28px rgba(31,107,255,.25);
+      flex-shrink:0;
+    }
+
+    .icon.purple{
+      background: linear-gradient(135deg, var(--purple), var(--wd-blue-2));
+      box-shadow: 0 12px 28px rgba(138,91,255,.25);
+    }
+
+    .icon svg{
+      width:22px;
+      height:22px;
+      stroke:white;
+      stroke-width:1.8;
+      fill:none;
+      opacity:.95;
+    }
+
+    .tileTitle{
+      margin:2px 0 0;
+      font-size:24px;
+    }
+
+    .tileDesc{
+      margin-top:8px;
+      font-size:13px;
+      line-height:1.6;
+      color:rgba(170,179,214,.95);
+    }
+
+    .tagRow{
+      margin-top:12px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      font-size:11px;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+    }
+
+    .footer{
+      margin-top:24px;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex;
+      justify-content:space-between;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .WDlogo{
+      height: 40px;
+      margin-left: 160%;
+    }
+
+    @media(max-width:900px){
+      .tile{grid-column:span 6;}
+    }
+    @media(max-width:600px){
+      .tile{grid-column:span 12;}
+      .headline{font-size:30px;}
+    }
 
 
-        .app-container { width: 100%; max-width: 1100px; z-index: 1; }
-        .dashboard-header { text-align: center; margin-bottom: 4rem; }
-        .gradient-title {
-            font-size: 3.5rem; font-weight: 800; letter-spacing: -1px;
-            background: linear-gradient(to right, #fff, #a5b4fc);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        .subtitle { font-size: 1.1rem; color: var(--text-gray); }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .card { text-decoration: none; display: block; }
-        .card-inner {
-            background: var(--card-bg); border: 1px solid var(--card-border);
-            border-radius: 16px; padding: 2rem; display: flex; align-items: center;
-            gap: 1.5rem; transition: all 0.3s ease; backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2); height: 100%; 
-        }
-        .card:hover .card-inner {
-            transform: translateY(-5px); border-color: var(--card-hover-border);
-            box-shadow: 0 0 30px var(--glow); background: rgba(30, 35, 55, 0.9);
-        }
-        .icon-box {
-            width: 50px; height: 50px; background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            color: var(--text-white); transition: all 0.3s ease; flex-shrink: 0; 
-        }
-        .card:hover .icon-box { background: var(--primary); color: white; transform: rotate(-10deg) scale(1.1); }
-        .card-text { flex-grow: 1; }
-        .card-text h2 { font-size: 1.2rem; font-weight: 600; color: var(--text-white); margin: 0; }
-        .arrow-icon {
-            color: var(--text-gray); opacity: 0; transform: translateX(-10px); transition: all 0.3s ease;
-        }
-        .card:hover .arrow-icon { opacity: 1; transform: translateX(0); color: var(--primary); }
-    </style>
+  </style>
 </head>
+
 <body>
+<div class="wrap">
 
-    <div class="background-logo">
-        <img src="/dashboard/Western_Digital.svg.png" alt="WDC Background Logo">
+  <div class="top">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>HR Workflow Automation</h1>
+        <p>Unified AI-enabled HR platform</p>
+      </div>
+      <div ><img src="https://i.ibb.co/jvt5H0QN/WDLogo.png"  class="WDlogo"></div>
     </div>
+  </div>
 
-    <div class="app-container">
-        
-        <header class="dashboard-header">
-            <h1 class="gradient-title">HR Workflow Hub</h1>
-            <p class="subtitle">Select a tool to begin automation</p>
-        </header>
+  <section class="hero">
+    <div class="kicker">HR • Automation • AI • Governance</div>
+    <h2 class="headline"><span>HR Workflow Automation Platform</span></h2>
 
-        <main class="dashboard-grid">
-            
-            <a href="http://localhost:8080" class="card">
-                <div class="card-inner">
-                    <div class="icon-box"><i data-lucide="mail"></i></div>
-                    <div class="card-text"><h2>Email Console</h2></div>
-                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
-                </div>
-            </a>
 
-            <a href="http://localhost:3000" class="card">
-                <div class="card-inner">
-                    <div class="icon-box"><i data-lucide="calendar-clock"></i></div>
-                    <div class="card-text"><h2>Task Scheduler</h2></div>
-                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
-                </div>
-            </a>
-
-            <a href="http://localhost:5001" class="card">
-                <div class="card-inner">
-                    <div class="icon-box"><i data-lucide="file-search"></i></div>
-                    <div class="card-text"><h2>PDF Data Extractor</h2></div>
-                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
-                </div>
-            </a>
-
-            <a href="http://localhost:3030" class="card">
-                <div class="card-inner">
-                    <div class="icon-box"><i data-lucide="message-circle-question"></i></div>
-                    <div class="card-text"><h2>FAQ Chatbot</h2></div>
-                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
-                </div>
-            </a>
-
-            <a href="/social-media" class="card">
-                <div class="card-inner">
-                    <div class="icon-box"><i data-lucide="share-2"></i></div>
-                    <div class="card-text"><h2>Social Media Linking Page</h2></div>
-                    <div class="arrow-icon"><i data-lucide="arrow-right"></i></div>
-                </div>
-            </a>
-
-        </main>
+    <div class="stats">
+      <div class="pill">AI Assist</div>
+      <div class="pill">Audit Ready</div>
+      <div class="pill">Unified Access</div>
+      <div class="pill">Enterprise Grade</div>
     </div>
+  </section>
 
-    <script>
-        lucide.createIcons();
-    </script>
+  <section class="grid">
+
+
+    <!-- Scheduler -->
+    <a class="tile" href="http://localhost:3000" target="_blank">
+      <div class="tileHead">
+        <div>
+          <h3 class="tileTitle">Task Scheduler</h3>
+          <p class="tileDesc">Assigning Tasks, Scheduling Meetings, Task Automation, Reminders.</p>
+        </div>
+        <div class="icon purple">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="6" width="16" height="14" rx="2"></rect>
+            <path d="M7 3v3M17 3v3M12 11v4l3 2"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="tagRow">
+        <span class="tag">Cron</span>
+        <span class="tag">SLA</span>
+        <span class="tag">Retries</span>
+      </div>
+    </a>
+    
+    <!-- HR Email -->
+    <a class="tile" href="http://localhost:8080/" target="_blank">
+      <div class="tileHead">
+        <div>
+          <h3 class="tileTitle">HR Email Console</h3>
+          <p class="tileDesc">Automated HR email campaigns with approvals and audit logs.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="6" width="16" height="12"></rect>
+            <path d="M4 7l8 6 8-6"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="tagRow">
+        <span class="tag">Automation</span>
+        <span class="tag">Bulk Send</span>
+        <span class="tag">Scheduling</span>
+      </div>
+    </a>
+
+    
+
+    <!-- FAQ Bot -->
+    <a class="tile" href="http://localhost:3030" target="_blank">
+      <div class="tileHead">
+        <div>
+          <h3 class="tileTitle">FAQ Bot</h3>
+          <p class="tileDesc">Instant answers for HR policies and onboarding support.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5h16v11H7l-3 3z"></path>
+            <path d="M9 9h6M9 12h4"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="tagRow">
+        <span class="tag">RAG</span>
+        <span class="tag">Policies</span>
+        <span class="tag">Support</span>
+      </div>
+    </a>
+
+    <!-- PDF -->
+    <a class="tile" href="http://localhost:5001" target="_blank">
+      <div class="tileHead">
+        <div>
+          <h3 class="tileTitle">PDF Info Extractor</h3>
+          <p class="tileDesc">Extract Candidate data from PDFs to Excel or JSON.</p>
+        </div>
+        <div class="icon purple">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 3h7l4 4v14H8z"></path>
+            <path d="M15 3v5h5M10 12h7M10 15h7"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="tagRow">
+        <span class="tag">BOM</span>
+        <span class="tag">Tables</span>
+        <span class="tag">Export</span>
+      </div>
+    </a>
+
+    <!-- Social -->
+    <a class="tile" href="/social-media" target="_blank">
+      <div class="tileHead">
+        <div>
+          <h4 class="tileTitle">Social-Media Page</h4>
+          <p class="tileDesc">Internal announcements, drafts, and publishing workflows.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="3"></circle>
+            <path d="M4 20a8 8 0 0 1 16 0"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="tagRow">
+        <span class="tag">Comms</span>
+        <span class="tag">Branding</span>
+        <span class="tag">Publishing</span>
+      </div>
+    </a>
+
+  </section>
+
+  <div class="footer">
+    <div>© HR Workflow Automation Platform</div>
+    <div>Dark Blue Gradient • Enterprise UI</div>
+  </div>
+
+</div>
 </body>
 </html>
