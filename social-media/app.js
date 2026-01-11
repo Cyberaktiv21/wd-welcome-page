@@ -163,4 +163,83 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && popupOverlay.classList.contains("active")) {
     popupOverlay.classList.remove("active");
   }
+  if (e.key === "Escape" && leadershipModal.classList.contains("active")) {
+    leadershipModal.classList.remove("active");
+  }
 });
+
+/* ============================
+   EXECUTIVE LEADERSHIP
+   ============================ */
+
+const leadershipGrid = document.getElementById('leadershipGrid');
+const leadershipModal = document.getElementById('leadershipModal');
+const leadershipClose = document.getElementById('leadershipClose');
+const bioContent = document.getElementById('bioContent');
+
+async function fetchLeadership() {
+  try {
+    const response = await fetch('/api/leadership');
+    const leaders = await response.json();
+    renderLeadership(leaders);
+  } catch (error) {
+    console.error('Failed to load leadership', error);
+    leadershipGrid.innerHTML = '<p style="text-align:center; color: #ff6b6b;">Failed to load leadership team.</p>';
+  }
+}
+
+function renderLeadership(leaders) {
+  leadershipGrid.innerHTML = '';
+
+  leaders.forEach(leader => {
+    const card = document.createElement('div');
+    card.className = 'leader-card';
+    card.onclick = () => openBioModal(leader);
+
+    // Fallback image if none found
+    const imgSrc = leader.image || 'https://www.westerndigital.com/content/dam/store/en-us/assets/company/default-avatar.png'; // Use a placeholder or generic
+
+    card.innerHTML = `
+      <div class="leader-img-container">
+        <img class="leader-img" src="${imgSrc}" alt="${leader.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/160?text=WD'"/>
+      </div>
+      <h3 class="leader-name">${leader.name}</h3>
+      <p class="leader-title">${leader.title}</p>
+    `;
+
+    leadershipGrid.appendChild(card);
+  });
+}
+
+function openBioModal(leader) {
+  const imgSrc = leader.image || 'https://via.placeholder.com/100?text=WD';
+
+  bioContent.innerHTML = `
+    <div class="bio-header">
+      <img class="bio-img" src="${imgSrc}" alt="${leader.name}" onerror="this.src='https://via.placeholder.com/100?text=WD'"/>
+      <div class="bio-info">
+        <h3>${leader.name}</h3>
+        <p>${leader.title}</p>
+      </div>
+    </div>
+    <div class="bio-text">
+      ${leader.bio ? `<p>${leader.bio}</p>` : '<p>Bio not available.</p>'}
+    </div>
+  `;
+
+  leadershipModal.classList.add('active');
+}
+
+// Close Leadership Modal
+leadershipClose.addEventListener('click', () => {
+  leadershipModal.classList.remove('active');
+});
+
+leadershipModal.addEventListener('click', (e) => {
+  if (e.target === leadershipModal) {
+    leadershipModal.classList.remove('active');
+  }
+});
+
+// Init
+fetchLeadership();

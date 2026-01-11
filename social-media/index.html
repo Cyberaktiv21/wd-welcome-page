@@ -130,24 +130,29 @@
           <!-- Twitter & Facebook -->
           <div class="social-pane mixed-social-pane" aria-label="Social Feeds">
             <!-- Twitter -->
-            <blockquote class="twitter-tweet">
-              <p lang="en" dir="ltr">The next era of data storage is here. With a legacy of innovation and a bold vision
-                for the future, we’re focused on delivering solutions that help our customers stay ahead of the curve.
-                <br><br>The future of data is unfolding at <a
-                  href="https://t.co/wBXdE6vfbp">https://t.co/wBXdE6vfbp</a>.
-                <a href="https://t.co/Rvc1U3Mlmj">pic.twitter.com/Rvc1U3Mlmj</a>
-              </p>&mdash; Western Digital (@westerndigital) <a
-                href="https://twitter.com/westerndigital/status/1894008135880212839?ref_src=twsrc%5Etfw">February 24,
-                2025</a>
-            </blockquote>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="embed-wrapper">
+              <blockquote class="twitter-tweet">
+                <p lang="en" dir="ltr">The next era of data storage is here. With a legacy of innovation and a bold
+                  vision
+                  for the future, we’re focused on delivering solutions that help our customers stay ahead of the curve.
+                  <br><br>The future of data is unfolding at <a
+                    href="https://t.co/wBXdE6vfbp">https://t.co/wBXdE6vfbp</a>.
+                  <a href="https://t.co/Rvc1U3Mlmj">pic.twitter.com/Rvc1U3Mlmj</a>
+                </p>&mdash; Western Digital (@westerndigital) <a
+                  href="https://twitter.com/westerndigital/status/1894008135880212839?ref_src=twsrc%5Etfw">February 24,
+                  2025</a>
+              </blockquote>
+              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
 
             <!-- Facebook -->
-            <iframe
-              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwesterndigital&tabs=timeline&width=550&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-              width="550" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-              allowfullscreen="true"
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            <div class="embed-wrapper">
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwesterndigital&tabs=timeline&width=550&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                width="550" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                allowfullscreen="true"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
           </div>
         </div>
       </article>
@@ -348,6 +353,23 @@
           <!-- TradingView Widget END -->
         </div>
       </article>
+
+      <!-- =====================================================
+             6) EXECUTIVE LEADERSHIP
+        ====================================================== -->
+      <article class="card wide leadership-section" aria-label="Executive Leadership">
+        <header class="section-header">
+          <h2>Executive Leadership</h2>
+          <p class="section-subtitle">
+            Meet the team leading Western Digital into the future.
+          </p>
+        </header>
+
+        <div class="leadership-grid" id="leadershipGrid">
+          <!-- Leadership items will be injected here via app.js -->
+          <div class="loading-spinner">Loading leadership team...</div>
+        </div>
+      </article>
     </section>
   </main>
 
@@ -376,6 +398,16 @@
   </div>
 
   <!-- App logic -->
+  <!-- Leadership Bio Modal -->
+  <div class="popup-overlay" id="leadershipModal">
+    <div class="popup-content bio-modal">
+      <button class="popup-close" id="leadershipClose">×</button>
+      <div id="bioContent">
+        <!-- Dynamic Content -->
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 
